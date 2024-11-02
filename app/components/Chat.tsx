@@ -86,6 +86,16 @@ const Chat = ({
     createThread();
   }, []);
 
+  // TODO: implement full messages retrieval for a thread
+  const retrieveMessages = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch(`/api/assistants/threads/${threadId}/messages`, {
+      method: 'GET',
+    });
+    const data = await res.json();
+    console.log(data);
+  };
   const sendMessage = async (text) => {
     const response = await fetch(
       `/api/assistants/threads/${threadId}/messages`,
@@ -250,8 +260,8 @@ const Chat = ({
   };
 
   return (
-    <div className={styles.chatContainer}>
-      <div className={styles.messages}>
+    <div className="flex flex-col-reverse h-full w-full">
+      <div className="flex-grow overflow-y-auto p-[10px] flex flex-col order-2 whitespace-pre-wrap">
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} text={msg.text} />
         ))}
@@ -259,21 +269,24 @@ const Chat = ({
       </div>
       <form
         onSubmit={handleSubmit}
-        className={`${styles.inputForm} ${styles.clearfix}`}
+        className="flex w-full p-[10px] pb-[40px] order-1"
       >
         <input
           type="text"
-          className={styles.input}
+          className="flex-grow px-[24px] py-[16px] mr-[10px] rounded-[60px] border-[2px] border-[solid] border-[transparent] text-[1em] bg-[#efefef]  focus:outline-none focus:border-black focus:bg-white placeholder:text-gray-400"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Enter your question"
         />
         <button
           type="submit"
-          className={styles.button}
+          className="px-[24px] py-[8px] bg-black text-white border-none text-[1em] rounded-[60px] disabled:bg-gray-300"
           disabled={inputDisabled}
         >
           Send
+        </button>
+        <button type="button" onClick={retrieveMessages}>
+          retrieve
         </button>
       </form>
     </div>
