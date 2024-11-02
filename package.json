@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "next": "14.2.16",
+    "openai": "^4.70.2",
     "openai-nextjs": "file:",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-markdown": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
