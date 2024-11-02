@@ -18,3 +18,12 @@ export async function POST(request, { params: { threadId } }) {
 
   return new Response(stream.toReadableStream());
 }
+
+// Retrieve messages by thread id
+export async function GET(request, { params: { threadId } }) {
+  const messages = await openai.beta.threads.messages.list(threadId, {
+    limit: 100,
+    order: 'asc',
+  });
+  return Response.json(messages);
+}
