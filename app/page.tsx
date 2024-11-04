@@ -1,11 +1,21 @@
-import Header from './components/Header';
-import Main from './components/Main';
+import Header from '../components/Header';
+import Login from '../components/Login';
+import Main from '../components/Main';
 
 const Home = () => {
+  const isLoggedIn = false;
   return (
     <>
-      <Header />
-      <Main />
+      {!isLoggedIn ? (
+        <>
+          <Login />
+        </>
+      ) : (
+        <>
+          <Header />
+          <Main />
+        </>
+      )}
     </>
   );
 };
