@@ -1,3 +1,5 @@
+'use server';
+
 import { signIn } from '@/auth';
 const doCredentialLogin = async function (formData) {
   try {

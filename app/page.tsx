@@ -1,12 +1,13 @@
 import Header from '../components/Header';
 import Login from '../components/Login';
 import Main from '../components/Main';
+import { auth } from '../auth';
 
-const Home = () => {
-  const isLoggedIn = false;
+const Home = async () => {
+  const session = await auth();
   return (
     <>
-      {!isLoggedIn ? (
+      {!session?.user ? (
         <>
           <Login />
         </>

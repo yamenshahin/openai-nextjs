@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { doCredentialLogin } from '../app/actions';
+import router from 'next/router';
 
 const Login = () => {
-  const router = useRouter();
   const [error, setError] = useState('');
-  async function onSubmit(event) {
+  const onSubmit = async (event) => {
     event.preventDefault();
     try {
       const formData = new FormData(event.currentTarget);
@@ -18,20 +17,20 @@ const Login = () => {
         console.error(response.error);
         setError(response.error.message);
       } else {
-        router.push('/chat');
+        console.log('Login successful');
+        router.push('/');
       }
     } catch (e) {
       console.error(e);
       setError('Check your Credentials');
     }
-  }
+  };
   return (
     <>
       <div className="flex justify-center items-center h-screen bg-gray-100">
         {error && <div className="text-xl text-red-500">{error}</div>}
         <form className="w-full max-w-md" onSubmit={onSubmit}>
           <h1 className="text-2xl font-bold mb-6">Please login to continue</h1>
-
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
