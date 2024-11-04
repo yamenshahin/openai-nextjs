@@ -5,9 +5,10 @@ import { auth } from '../auth';
 
 const Home = async () => {
   const session = await auth();
+  const isLoggedIn = !!session?.user;
   return (
     <>
-      {!session?.user ? (
+      {!isLoggedIn ? (
         <>
           <Login />
         </>

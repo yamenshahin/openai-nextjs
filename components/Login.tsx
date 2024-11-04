@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { doCredentialLogin } from '../app/actions';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+  const router = useRouter();
   const [error, setError] = useState('');
   const onSubmit = async (event) => {
     event.preventDefault();
