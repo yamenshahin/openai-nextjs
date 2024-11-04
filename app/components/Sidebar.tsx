@@ -1,7 +1,7 @@
 const Sidebar = () => {
   return (
     <>
-      <div className="w-64 bg-gray-100 p-4">
+      <div className="w-[420px] bg-gray-100 p-4 h-full">
         <ul>
           <li>
             <a href="#">LMS GPT Security Measures</a>

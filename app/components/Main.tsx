@@ -4,7 +4,7 @@ import Chat from './Chat';
 const Main = () => {
   return (
     <>
-      <main className="flex">
+      <main className="flex justify-center items-center h-[90vh] bg-[white]">
         <Sidebar />
         <Chat />
       </main>
