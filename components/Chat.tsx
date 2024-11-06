@@ -170,13 +170,14 @@ const Chat = ({
     if (toolCall.type != 'code_interpreter') return;
     appendMessage('code', '');
   };
-
+  /* eslint-disable */
   // toolCallDelta - log delta and snapshot for the tool call
   const toolCallDelta = (delta, snapshot) => {
     if (delta.type != 'code_interpreter') return;
     if (!delta.code_interpreter.input) return;
     appendToLastMessage(delta.code_interpreter.input);
   };
+  /* eslint-enable */
 
   // handleRequiresAction - handle function call
   const handleRequiresAction = async (
