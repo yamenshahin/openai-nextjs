@@ -29,6 +29,7 @@ const Login = () => {
   return (
     <>
       <div className="flex justify-center items-center h-screen bg-gray-100">
+        {/* TODO: fix error message positioning */}
         {error && <div className="text-xl text-red-500">{error}</div>}
         <form className="w-full max-w-md" onSubmit={onSubmit}>
           <h1 className="text-2xl font-bold mb-6">Please login to continue</h1>
