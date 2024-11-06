@@ -170,6 +170,7 @@ const Chat = ({
     if (toolCall.type != 'code_interpreter') return;
     appendMessage('code', '');
   };
+
   /* eslint-disable */
   // toolCallDelta - log delta and snapshot for the tool call
   const toolCallDelta = (delta, snapshot) => {
