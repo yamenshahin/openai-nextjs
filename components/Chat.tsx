@@ -7,6 +7,7 @@ import Markdown from 'react-markdown';
 // @ts-expect-error - no types for this yet
 import { AssistantStreamEvent } from 'openai/resources/beta/assistants/assistants';
 import { RequiredActionFunctionToolCall } from 'openai/resources/beta/threads/runs/runs';
+import { set } from 'mongoose';
 
 type MessageProps = {
   role: 'user' | 'assistant' | 'code';
@@ -66,6 +67,7 @@ const Chat = ({
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [threadId, setThreadId] = useState('');
+  const [threads, setThreads] = useState([]);
 
   // automatically scroll to bottom of chat
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -86,6 +88,17 @@ const Chat = ({
       setThreadId(data.threadId);
     };
     createThread();
+    const getUser = async () => {
+      const res = await fetch(`/api/users/${userId}`, {
+        method: 'GET',
+      });
+      const data = await res.json();
+      return data;
+    };
+    getUser().then((data) => {
+      setThreads(data.thread);
+      console.log(data);
+    });
   }, []);
 
   // TODO: implement full messages retrieval for a thread

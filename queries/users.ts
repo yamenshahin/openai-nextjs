@@ -34,14 +34,12 @@ const addUserThread = async (
   userId: string,
   thread: { threadId: string; threadTitle: string },
 ) => {
-  console.log(userId, thread);
   try {
     const user = await User.findById(userId);
     if (!user) throw new Error('User not found');
-    if (!user.thread) user.thread = [];
-    const indexOfThread = findIndexOfThread(user.thread, thread.threadId);
-    console.log(indexOfThread);
-    if (indexOfThread === -1) user.thread.push(thread);
+    if (!user.threads) user.threads = [];
+    const indexOfThread = findIndexOfThread(user.threads, thread.threadId);
+    if (indexOfThread === -1) user.threads.push(thread);
     await user.save();
   } catch (error) {
     throw new Error(error);
