@@ -9,6 +9,7 @@ const userSchema = new Schema({
     required: true,
     type: String,
   },
+  thread_ids: [String],
 });
 
 export const User = mongoose.models?.User || mongoose.model('User', userSchema);

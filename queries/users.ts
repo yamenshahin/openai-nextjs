@@ -12,4 +12,13 @@ const createUser = async (email: string, password: string) => {
   }
 };
 
-export { createUser };
+const getUserById = async (id: string) => {
+  try {
+    const user = await User.findById(id);
+    return user;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export { createUser, getUserById };
