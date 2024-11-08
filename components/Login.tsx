@@ -18,7 +18,6 @@ const Login = () => {
         console.error(response.error);
         setError(response.error.message);
       } else {
-        console.log('Login successful');
         router.push('/');
       }
     } catch (e) {

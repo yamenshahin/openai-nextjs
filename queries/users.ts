@@ -4,7 +4,6 @@ const createUser = async (email: string, password: string) => {
     email,
     password,
   };
-  console.log('we are creating a new user');
   try {
     await User.create(user);
   } catch (error) {
