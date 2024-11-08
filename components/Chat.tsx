@@ -55,10 +55,12 @@ type ChatProps = {
   functionCallHandler?: (
     toolCall: RequiredActionFunctionToolCall,
   ) => Promise<string>;
+  userId: string;
 };
 
 const Chat = ({
-  functionCallHandler = () => Promise.resolve(''), // default to return empty string
+  functionCallHandler = () => Promise.resolve(''),
+  userId, // default to return empty string
 }: ChatProps) => {
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
@@ -128,10 +130,22 @@ const Chat = ({
     handleReadableStream(stream);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userInput.trim()) return;
     sendMessage(userInput);
+    // add thread
+    const response = await fetch(`/api/user/`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        thread: {
+          threadId,
+          threadTitle: userInput.trim(),
+        },
+      }),
+    });
+    console.log(response);
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: 'user', text: userInput },

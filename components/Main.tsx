@@ -1,12 +1,12 @@
 import Sidebar from './Sidebar';
 import Chat from './Chat';
 
-const Main = () => {
+const Main = ({ user }) => {
   return (
     <>
       <main className="flex justify-center items-center h-[90vh] bg-[white]">
-        <Sidebar />
-        <Chat />
+        <Sidebar userThreads={user.thread} />
+        <Chat userId={user._id} />
       </main>
     </>
   );

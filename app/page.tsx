@@ -26,7 +26,7 @@ const Home = async () => {
       ) : (
         <>
           <Header username={emailToUsername(user.email)} />
-          <Main />
+          <Main user={user} />
         </>
       )}
     </>
