@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { getUsersByEmail } from './data/user';
+import bcrypt from 'bcryptjs';
+import { User } from './model/user';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -16,10 +17,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials) return null;
 
         try {
-          const user = getUsersByEmail(credentials.email as string);
+          const user = await User.findOne(
+            { email: credentials?.email },
+            { password: 1 },
+          );
 
           if (!user) return null;
-          if (user.password !== credentials.password) return null;
+
+          const isMatch = await bcrypt.compare(
+            credentials?.password,
+            user.password,
+          );
+
+          if (!isMatch) return null;
 
           return user;
         } catch (error) {
