@@ -57,11 +57,13 @@ type ChatProps = {
     toolCall: RequiredActionFunctionToolCall,
   ) => Promise<string>;
   userId: string;
+  innerThreadId?: string;
 };
 
 const Chat = ({
   functionCallHandler = () => Promise.resolve(''),
-  userId, // default to return empty string
+  userId,
+  innerThreadId,
 }: ChatProps) => {
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
@@ -80,14 +82,19 @@ const Chat = ({
 
   // create a new threadID when chat component created
   useEffect(() => {
-    const createThread = async () => {
-      const res = await fetch(`/api/assistants/threads`, {
-        method: 'POST',
-      });
-      const data = await res.json();
-      setThreadId(data.threadId);
-    };
-    createThread();
+    if (innerThreadId) {
+      setThreadId(innerThreadId);
+    } else {
+      const createThread = async () => {
+        const res = await fetch(`/api/assistants/threads`, {
+          method: 'POST',
+        });
+        const data = await res.json();
+        setThreadId(data.threadId);
+      };
+      createThread();
+    }
+
     const getUser = async () => {
       const res = await fetch(`/api/users/${userId}`, {
         method: 'GET',
@@ -148,7 +155,7 @@ const Chat = ({
     if (!userInput.trim()) return;
     sendMessage(userInput);
     // add thread
-    const response = await fetch(`/api/user/`, {
+    const response = await fetch(`/api/users/`, {
       method: 'POST',
       body: JSON.stringify({
         userId,
@@ -158,7 +165,6 @@ const Chat = ({
         },
       }),
     });
-    console.log(response);
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: 'user', text: userInput },

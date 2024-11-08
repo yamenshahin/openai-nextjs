@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const Sidebar = ({ userThreads }) => {
   return (
     <>
@@ -5,7 +7,11 @@ const Sidebar = ({ userThreads }) => {
         <ul>
           {userThreads &&
             userThreads.map((thread) => (
-              <li key={thread.threadId}>{thread.threadTitle}</li>
+              <li key={thread.threadId}>
+                <Link href={{ pathname: `/threads/${thread.threadId}` }}>
+                  {thread.threadTitle}
+                </Link>
+              </li>
             ))}
         </ul>
       </div>

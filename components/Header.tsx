@@ -1,16 +1,16 @@
-import { signOut } from '../auth';
+'use client';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
+import { signOut } from '@/util/serverActions'; // Assuming NextAuth.js for authentication
 
 const Header = ({ username }) => {
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+    await signOut();
+  };
   return (
     <header className="flex justify-between items-center">
       <h1 className="text-2xl font-bold">This is header</h1>
-      <form
-        action={async () => {
-          'use server';
-          await signOut();
-        }}
-      >
+      <form onSubmit={handleSignOut}>
         <div className="flex items-center">
           <span className="flex items-center mr-4">
             <FaUserCircle className="text-blue-500 mr-2" /> {username}

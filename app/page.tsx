@@ -1,7 +1,7 @@
-import Header from '../components/Header';
-import Login from '../components/Login';
-import Main from '../components/Main';
-import { auth } from '../auth';
+import Header from '@/components/Header';
+import Login from '@/components/Login';
+import Main from '@/components/Main';
+import { auth } from '@/auth';
 import { emailToUsername } from '@/util/helper';
 import { getUserById } from '@/queries/users';
 
@@ -15,7 +15,11 @@ const Home = async () => {
   let user = {} as UserData;
 
   if (isLoggedIn) {
-    user = await getUserById(session.user._id);
+    try {
+      user = await getUserById(session.user._id);
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <>
