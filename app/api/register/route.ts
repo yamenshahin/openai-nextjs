@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createUser } from '@/queries/users';
 import dbConnect from '@/lib/db';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const POST = async (req: NextRequest) => {
   const { email, password } = await req.json();
