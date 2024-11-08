@@ -4,6 +4,7 @@ import Warnings from '../components/warnings';
 import { assistantId } from './assistant-config';
 import dbConnect from '@/lib/db';
 const inter = Inter({ subsets: ['latin'] });
+import { SessionProvider } from 'next-auth/react';
 
 const metadata = {
   title: "Lou Adler's Performance-based Hiring Coach",
@@ -19,9 +20,11 @@ const RootLayout = async ({ children }) => {
   const dbConnection = await dbConnect();
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {assistantId ? children : <Warnings />}
-      </body>
+      <SessionProvider>
+        <body className={inter.className}>
+          {assistantId ? children : <Warnings />}
+        </body>
+      </SessionProvider>
     </html>
   );
 };
