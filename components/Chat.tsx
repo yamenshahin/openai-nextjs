@@ -7,7 +7,6 @@ import Markdown from 'react-markdown';
 // @ts-expect-error - no types for this yet
 import { AssistantStreamEvent } from 'openai/resources/beta/assistants/assistants';
 import { RequiredActionFunctionToolCall } from 'openai/resources/beta/threads/runs/runs';
-import { set } from 'mongoose';
 
 type MessageProps = {
   role: 'user' | 'assistant' | 'code';
@@ -104,7 +103,7 @@ const Chat = ({
     };
     getUser().then((data) => {
       setThreads(data.thread);
-      console.log(data);
+      console.log(threads);
     });
   }, []);
 
@@ -128,8 +127,12 @@ const Chat = ({
         }),
       },
     );
-    const stream = AssistantStream.fromReadableStream(response.body);
-    handleReadableStream(stream);
+    if (response.body !== null) {
+      const stream = AssistantStream.fromReadableStream(response.body);
+      handleReadableStream(stream);
+    } else {
+      console.error('response.body is null');
+    }
   };
 
   const submitActionResult = async (runId, toolCallOutputs) => {
@@ -146,8 +149,12 @@ const Chat = ({
         }),
       },
     );
-    const stream = AssistantStream.fromReadableStream(response.body);
-    handleReadableStream(stream);
+    if (response.body !== null) {
+      const stream = AssistantStream.fromReadableStream(response.body);
+      handleReadableStream(stream);
+    } else {
+      console.error('response.body is null');
+    }
   };
 
   const handleSubmit = async (e) => {
