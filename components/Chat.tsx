@@ -162,7 +162,7 @@ const Chat = ({
     if (!userInput.trim()) return;
     sendMessage(userInput);
     // add thread
-    const response = await fetch(`/api/users/`, {
+    await fetch(`/api/users/`, {
       method: 'POST',
       body: JSON.stringify({
         userId,
