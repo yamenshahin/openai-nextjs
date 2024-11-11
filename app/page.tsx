@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Header from '@/components/Header';
 import Login from '@/components/Login';
 import Main from '@/components/Main';
@@ -16,6 +17,7 @@ const Home = async () => {
 
   if (isLoggedIn && session.user) {
     try {
+      // @ts-expect-error
       user = await getUserById(session.user._id);
     } catch (error: unknown) {
       console.log(error);
