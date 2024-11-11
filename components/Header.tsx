@@ -3,7 +3,7 @@ import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { signOut } from '@/util/serverActions'; // Assuming NextAuth.js for authentication
 
 const Header = ({ username }: { username: string }) => {
-  const handleSignOut = async (e) => {
+  const handleSignOut = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     await signOut();
   };
