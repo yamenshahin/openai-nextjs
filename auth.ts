@@ -32,6 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!isMatch) return null;
 
           return user;
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error: unknown) {
           return null;
         }

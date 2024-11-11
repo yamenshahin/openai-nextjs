@@ -12,12 +12,21 @@ const POST = async (req: NextRequest) => {
   try {
     await addUserThread(userId, thread);
   } catch (error: unknown) {
-    return NextResponse.json(
-      { message: `${error.message}` },
-      {
-        status: 500,
-      },
-    );
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { message: `${error.message}` },
+        {
+          status: 500,
+        },
+      );
+    } else {
+      return NextResponse.json(
+        { message: 'Unknown error' },
+        {
+          status: 500,
+        },
+      );
+    }
   }
 
   // Return a success response

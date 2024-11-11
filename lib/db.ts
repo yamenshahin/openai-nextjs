@@ -7,7 +7,7 @@ const dbConnect = async () => {
     );
     return connection;
   } catch (error: unknown) {
-    throw new Error(error);
+    throw new Error(error as string);
   }
 };
 
