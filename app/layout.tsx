@@ -15,7 +15,7 @@ const metadata = {
   },
 };
 
-const RootLayout = async ({ children }) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dbConnection = await dbConnect();
   return (
