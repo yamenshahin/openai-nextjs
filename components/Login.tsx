@@ -7,7 +7,10 @@ import { useRouter } from 'next/navigation';
 const Login = () => {
   const router = useRouter();
   const [error, setError] = useState('');
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: {
+    preventDefault: () => void;
+    currentTarget: HTMLFormElement | undefined;
+  }) => {
     event.preventDefault();
     try {
       const formData = new FormData(event.currentTarget);

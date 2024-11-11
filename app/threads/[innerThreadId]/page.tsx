@@ -13,8 +13,9 @@ const Page = async ({
   const session = await auth();
   const isLoggedIn = !!session?.user;
   interface UserData {
+    _id: string;
     email: string;
-    thread_ids: string[];
+    threads: { threadId: string; threadTitle: string }[];
   }
   let user = {} as UserData;
 

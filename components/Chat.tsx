@@ -117,7 +117,7 @@ const Chat = ({
     const data = await res.json();
     console.log(data);
   };
-  const sendMessage = async (text) => {
+  const sendMessage = async (text: string) => {
     const response = await fetch(
       `/api/assistants/threads/${threadId}/messages`,
       {
@@ -135,7 +135,10 @@ const Chat = ({
     }
   };
 
-  const submitActionResult = async (runId, toolCallOutputs) => {
+  const submitActionResult = async (
+    runId: unknown,
+    toolCallOutputs: unknown,
+  ) => {
     const response = await fetch(
       `/api/assistants/threads/${threadId}/actions`,
       {
@@ -157,7 +160,7 @@ const Chat = ({
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (!userInput.trim()) return;
     sendMessage(userInput);
@@ -189,7 +192,10 @@ const Chat = ({
   };
 
   // textDelta - append text to last assistant message
-  const handleTextDelta = (delta) => {
+  const handleTextDelta = (delta: {
+    value: string | null;
+    annotations: null;
+  }) => {
     if (delta.value != null) {
       // remove source annotation
       const textWithoutSource = delta.value.replace(/【\d*:?\d*†source】/g, ''); // Modified regex to match zero or more digits before and after the colon
@@ -201,7 +207,7 @@ const Chat = ({
   };
 
   // imageFileDone - show image in chat
-  const handleImageFileDone = (image) => {
+  const handleImageFileDone = (image: { file_id: unknown }) => {
     appendToLastMessage(`\n![${image.file_id}](/api/files/${image.file_id})\n`);
   };
 
@@ -228,7 +234,7 @@ const Chat = ({
     const toolCalls = event.data.required_action.submit_tool_outputs.tool_calls;
     // loop over tool calls and call function handler
     const toolCallOutputs = await Promise.all(
-      toolCalls.map(async (toolCall) => {
+      toolCalls.map(async (toolCall: RequiredActionFunctionToolCall) => {
         const result = await functionCallHandler(toolCall);
         return { output: result, tool_call_id: toolCall.id };
       }),
