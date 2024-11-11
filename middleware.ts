@@ -1,5 +1,3 @@
-import { runtime } from './app/api/assistants/threads/route';
-
 export { auth as middleware } from '@/auth';
 
 export const config = {
