@@ -5,7 +5,11 @@ import { auth } from '@/auth';
 import { emailToUsername } from '@/util/helper';
 import { getUserById } from '@/queries/users';
 
-const Page = async ({ params: { innerThreadId } }) => {
+const Page = async ({
+  params: { innerThreadId },
+}: {
+  params: { innerThreadId: string };
+}) => {
   const session = await auth();
   const isLoggedIn = !!session?.user;
   interface UserData {
