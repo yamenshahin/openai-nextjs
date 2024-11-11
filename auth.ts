@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!isMatch) return null;
 
           return user;
-        } catch (error) {
+        } catch (error: unknown) {
           return null;
         }
       },

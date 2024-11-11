@@ -16,7 +16,7 @@ const POST = async (req: NextRequest) => {
 
   try {
     await createUser(email, encryptedPassword);
-  } catch (error) {
+  } catch (error: unknown) {
     return NextResponse.json(
       { message: `${error.message}` },
       {

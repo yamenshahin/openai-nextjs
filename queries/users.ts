@@ -7,7 +7,7 @@ const createUser = async (email: string, password: string) => {
   };
   try {
     await User.create(user);
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error(error);
   }
 };
@@ -16,7 +16,7 @@ const getUserById = async (id: string) => {
   try {
     const user = await User.findById(id);
     return user;
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error(error);
   }
 };
@@ -25,7 +25,7 @@ const getUserByEmail = async (email: string) => {
   try {
     const user = await User.findOne({ email });
     return user;
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error(error);
   }
 };
@@ -41,7 +41,7 @@ const addUserThread = async (
     const indexOfThread = findIndexOfThread(user.threads, thread.threadId);
     if (indexOfThread === -1) user.threads.push(thread);
     await user.save();
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error(error);
   }
 };

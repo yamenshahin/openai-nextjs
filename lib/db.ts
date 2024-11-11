@@ -6,7 +6,7 @@ const dbConnect = async () => {
       process.env.MONGODB_URI as string,
     );
     return connection;
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error(error);
   }
 };

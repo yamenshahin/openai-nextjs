@@ -11,7 +11,7 @@ const POST = async (req: NextRequest) => {
 
   try {
     await addUserThread(userId, thread);
-  } catch (error) {
+  } catch (error: unknown) {
     return NextResponse.json(
       { message: `${error.message}` },
       {

@@ -21,7 +21,7 @@ const Page = async ({
   if (isLoggedIn) {
     try {
       user = await getUserById(session.user._id);
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
     }
   }
