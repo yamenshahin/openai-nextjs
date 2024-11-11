@@ -25,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!user) return null;
 
           const isMatch = await bcrypt.compare(
-            credentials?.password,
+            credentials?.password as string,
             user.password,
           );
 
@@ -41,6 +41,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async session({ session, token }) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       session.user = token.user;
       return session;
     },

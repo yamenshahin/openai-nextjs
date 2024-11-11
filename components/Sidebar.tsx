@@ -1,6 +1,11 @@
 import Link from 'next/link';
 
-const Sidebar = ({ userThreads }) => {
+interface Thread {
+  threadId: string;
+  threadTitle: string;
+}
+
+const Sidebar = ({ userThreads }: { userThreads: Thread[] }) => {
   return (
     <>
       <div className="w-[420px] bg-gray-100 p-4 h-full">
