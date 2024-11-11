@@ -1,7 +1,7 @@
 'use server';
 
 import { signIn } from '@/auth';
-const doCredentialLogin = async function (formData) {
+const doCredentialLogin = async function (formData: FormData) {
   try {
     const response = await signIn('credentials', {
       email: formData.get('email'),
