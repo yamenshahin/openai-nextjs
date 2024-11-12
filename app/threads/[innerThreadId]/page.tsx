@@ -18,7 +18,9 @@ const Page = async ({
     threads: { threadId: string; threadTitle: string }[];
   }
   let user = {} as UserData;
-
+  const userEmail = user?.email
+    ? emailToUsername(user.email)
+    : 'User@email.com';
   if (isLoggedIn && session.user) {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -36,7 +38,7 @@ const Page = async ({
         </>
       ) : (
         <>
-          <Header username={emailToUsername(user.email)} />
+          <Header username={emailToUsername(userEmail)} />
           <Main user={user} innerThreadId={innerThreadId} />
         </>
       )}
