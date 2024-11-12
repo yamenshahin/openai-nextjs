@@ -91,7 +91,6 @@ const Chat = ({
       handleRetrieveThreadsArray().then(() => scrollToBottom());
     } else {
       setShowChatStarters(true);
-      console.log('we set setShowChatStarters');
       const createThread = async () => {
         const res = await fetch(`/api/assistants/threads`, {
           method: 'POST',
@@ -328,10 +327,10 @@ const Chat = ({
       return [...prevMessages.slice(0, -1), updatedLastMessage];
     });
   };
-  console.log(chatStarters);
   return (
     <div className="flex flex-col-reverse h-full w-full">
       <div className="flex-grow overflow-y-auto p-[10px] flex flex-col order-2 whitespace-pre-wrap">
+        <h1>Where is my showChatStarters</h1>
         {showChatStarters && (
           <div className="grid grid-cols-2 gap-4">
             {chatStarters &&
