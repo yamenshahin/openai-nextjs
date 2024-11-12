@@ -1,6 +1,7 @@
 'use client';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
-import { signOut } from '@/util/serverActions'; // Assuming NextAuth.js for authentication
+import { signOut } from '@/util/serverActions';
+import Image from 'next/image';
 
 const Header = ({ username }: { username: string }) => {
   const handleSignOut = async (e: { preventDefault: () => void }) => {
@@ -8,8 +9,17 @@ const Header = ({ username }: { username: string }) => {
     await signOut();
   };
   return (
-    <header className="flex justify-between items-center">
-      <h1 className="text-2xl font-bold">This is header</h1>
+    <header className="flex justify-between items-center p-4">
+      <Image
+        src={
+          process.env.NEXT_PUBLIC_LOGO_URL
+            ? process.env.NEXT_PUBLIC_LOGO_URL
+            : '/logo.png'
+        }
+        alt="Logo"
+        width={process.env.NEXT_PUBLIC_LOGO_URL ? 230 : 132}
+        height={process.env.NEXT_PUBLIC_LOGO_URL ? 116 : 36}
+      />
       <form onSubmit={handleSignOut}>
         <div className="flex items-center">
           <span className="flex items-center mr-4">

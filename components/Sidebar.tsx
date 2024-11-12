@@ -20,7 +20,7 @@ const Sidebar = ({ userThreads }: { userThreads: Thread[] }) => {
               <li key={thread.threadId} className="px-4 py-2 hover:bg-gray-200">
                 <Link
                   href={{ pathname: `/threads/${thread.threadId}` }}
-                  className="inline-block align-middle"
+                  className="block w-full align-middle"
                 >
                   <FaCommentAlt className="text-gray-500 mr-2 inline-block align-middle" />
                   {thread.threadTitle}
