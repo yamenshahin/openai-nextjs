@@ -70,7 +70,6 @@ const Chat = ({
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [threadId, setThreadId] = useState('');
-  const [threads, setThreads] = useState([]);
 
   // automatically scroll to bottom of chat
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -84,7 +83,10 @@ const Chat = ({
   // create a new threadID when chat component created
   useEffect(() => {
     if (innerThreadId) {
+      // if innerThreadId is passed in (i.e. from sidebar)
       setThreadId(innerThreadId);
+
+      handleRetrieveThreadsArray().then(() => scrollToBottom());
     } else {
       const createThread = async () => {
         const res = await fetch(`/api/assistants/threads`, {
@@ -95,29 +97,29 @@ const Chat = ({
       };
       createThread();
     }
-
-    const getUser = async () => {
-      const res = await fetch(`/api/users/${userId}`, {
-        method: 'GET',
-      });
-      const data = await res.json();
-      return data;
-    };
-    getUser().then((data) => {
-      setThreads(data.thread);
-      console.log(threads);
-    });
   }, []);
 
-  // TODO: implement full messages retrieval for a thread
-  const retrieveMessages = async (e) => {
-    e.preventDefault();
-
-    const res = await fetch(`/api/assistants/threads/${threadId}/messages`, {
-      method: 'GET',
-    });
-    const data = await res.json();
-    console.log(data);
+  const handleRetrieveThreadsArray = async () => {
+    const threadsArray = await retrieveThreadsArray();
+    const newThreadsArray = processThreadsArray(threadsArray);
+    setMessages((prevMessages) => [...prevMessages, ...newThreadsArray]);
+  };
+  const retrieveThreadsArray = async () => {
+    const res = await fetch(
+      `/api/assistants/threads/${innerThreadId}/messages`,
+      {
+        method: 'GET',
+      },
+    );
+    const threadObject = await res.json();
+    return threadObject.data;
+  };
+  const processThreadsArray = (threadsArray: unknown) => {
+    const newThreadsArray = threadsArray.map((thread) => ({
+      role: thread.role,
+      text: thread.content[0].text.value, // Assuming the first content item is always text
+    }));
+    return newThreadsArray;
   };
   const sendMessage = async (text: string) => {
     const response = await fetch(
@@ -334,9 +336,6 @@ const Chat = ({
           disabled={inputDisabled}
         >
           Send
-        </button>
-        <button type="button" onClick={retrieveMessages}>
-          retrieve
         </button>
       </form>
     </div>
