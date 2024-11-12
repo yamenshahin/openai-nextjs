@@ -38,7 +38,7 @@ const Page = async ({
         </>
       ) : (
         <>
-          <Header username={emailToUsername(userEmail)} />
+          <Header username={userEmail} />
           <Main user={user} innerThreadId={innerThreadId} />
         </>
       )}
