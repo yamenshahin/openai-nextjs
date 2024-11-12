@@ -18,9 +18,7 @@ const Page = async ({
     threads: { threadId: string; threadTitle: string }[];
   }
   let user = {} as UserData;
-  const userEmail = user?.email
-    ? emailToUsername(user.email)
-    : 'User@email.com';
+  const userEmail = user?.email ? emailToUsername(user.email) : 'User';
   if (isLoggedIn && session.user) {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
