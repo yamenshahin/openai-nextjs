@@ -15,7 +15,7 @@ const Home = async () => {
     threads: { threadId: string; threadTitle: string }[];
   }
   let user = {} as UserData;
-
+  const userEmail = user?.email ? emailToUsername(user.email) : 'User';
   if (isLoggedIn && session.user) {
     try {
       // @ts-expect-error
@@ -32,7 +32,7 @@ const Home = async () => {
         </>
       ) : (
         <>
-          <Header username={emailToUsername(user.email)} />
+          <Header username={userEmail} />
           <Main user={user} />
         </>
       )}
