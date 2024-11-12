@@ -91,6 +91,7 @@ const Chat = ({
       handleRetrieveThreadsArray().then(() => scrollToBottom());
     } else {
       setShowChatStarters(true);
+      console.log('we set setShowChatStarters');
       const createThread = async () => {
         const res = await fetch(`/api/assistants/threads`, {
           method: 'POST',
