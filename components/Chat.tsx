@@ -327,6 +327,7 @@ const Chat = ({
       return [...prevMessages.slice(0, -1), updatedLastMessage];
     });
   };
+  console.log(chatStarters);
   return (
     <div className="flex flex-col-reverse h-full w-full">
       <div className="flex-grow overflow-y-auto p-[10px] flex flex-col order-2 whitespace-pre-wrap">
