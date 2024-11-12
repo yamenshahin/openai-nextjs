@@ -2,6 +2,7 @@
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { signOut } from '@/util/serverActions';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Header = ({ username }: { username: string }) => {
   const handleSignOut = async (e: { preventDefault: () => void }) => {
@@ -10,16 +11,19 @@ const Header = ({ username }: { username: string }) => {
   };
   return (
     <header className="flex justify-between items-center p-4">
-      <Image
-        src={
-          process.env.NEXT_PUBLIC_LOGO_URL
-            ? process.env.NEXT_PUBLIC_LOGO_URL
-            : '/logo.png'
-        }
-        alt="Logo"
-        width={process.env.NEXT_PUBLIC_LOGO_URL ? 230 : 132}
-        height={process.env.NEXT_PUBLIC_LOGO_URL ? 116 : 36}
-      />
+      <Link href="/">
+        <Image
+          src={
+            process.env.NEXT_PUBLIC_LOGO_URL
+              ? process.env.NEXT_PUBLIC_LOGO_URL
+              : '/logo.png'
+          }
+          alt="Logo"
+          width={process.env.NEXT_PUBLIC_LOGO_URL ? 230 : 132}
+          height={process.env.NEXT_PUBLIC_LOGO_URL ? 116 : 36}
+        />
+      </Link>
+
       <form onSubmit={handleSignOut}>
         <div className="flex items-center">
           <span className="flex items-center mr-4">
