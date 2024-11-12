@@ -9,6 +9,7 @@ import Markdown from 'react-markdown';
 // @ts-expect-error - no types for this yet
 import { AssistantStreamEvent } from 'openai/resources/beta/assistants/assistants';
 import { RequiredActionFunctionToolCall } from 'openai/resources/beta/threads/runs/runs';
+import ChatStarters from './ChatStarters';
 
 type MessageProps = {
   role: 'user' | 'assistant' | 'code';
@@ -70,6 +71,8 @@ const Chat = ({
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [threadId, setThreadId] = useState('');
+  const [showChatStarters, setShowChatStarters] = useState(false);
+  const chatStarters = JSON.parse(process.env.NEXT_PUBLIC_CHAT_STARTS);
 
   // automatically scroll to bottom of chat
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -85,9 +88,9 @@ const Chat = ({
     if (innerThreadId) {
       // if innerThreadId is passed in (i.e. from sidebar)
       setThreadId(innerThreadId);
-
       handleRetrieveThreadsArray().then(() => scrollToBottom());
     } else {
+      setShowChatStarters(true);
       const createThread = async () => {
         const res = await fetch(`/api/assistants/threads`, {
           method: 'POST',
@@ -164,11 +167,23 @@ const Chat = ({
     }
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  // For regular user input:
+  const handleRegularInput = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    handleSubmit(userInput);
+  };
+
+  // For chat starter input:
+  const handleChatStarter = async (chatString: string) => {
+    handleSubmit(chatString);
+  };
+
+  const handleSubmit = async (userInput: string) => {
     if (!userInput.trim()) return;
+
     sendMessage(userInput);
-    // add thread
+
+    // Add thread
     await fetch(`/api/users/`, {
       method: 'POST',
       body: JSON.stringify({
@@ -179,15 +194,17 @@ const Chat = ({
         },
       }),
     });
+
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: 'user', text: userInput },
     ]);
+
     setUserInput('');
     setInputDisabled(true);
     scrollToBottom();
+    setShowChatStarters(false);
   };
-
   /* Stream Event Handlers */
 
   // textCreated - create new assistant message
@@ -310,17 +327,31 @@ const Chat = ({
       return [...prevMessages.slice(0, -1), updatedLastMessage];
     });
   };
-
   return (
     <div className="flex flex-col-reverse h-full w-full">
       <div className="flex-grow overflow-y-auto p-[10px] flex flex-col order-2 whitespace-pre-wrap">
+        {showChatStarters && (
+          <div className="grid grid-cols-2 gap-4">
+            {chatStarters &&
+              chatStarters.map((starter) => (
+                <button
+                  key={starter.title}
+                  type="button"
+                  onClick={() => handleChatStarter(starter.chatString)}
+                  className="bg-transparent border border-gray-300 px-4 py-2 rounded-md"
+                >
+                  {starter.title}: {starter.chatString}
+                </button>
+              ))}
+          </div>
+        )}
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} text={msg.text} />
         ))}
         <div ref={messagesEndRef} />
       </div>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleRegularInput}
         className="flex w-full p-[10px] pb-[40px] order-1"
       >
         <input
