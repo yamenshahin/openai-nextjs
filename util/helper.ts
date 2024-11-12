@@ -1,4 +1,5 @@
 const emailToUsername = (email: string) => {
+  if (!email) return 'User';
   return email.split('@')[0];
 };
 
