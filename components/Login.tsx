@@ -25,6 +25,7 @@ const Login = () => {
       }
     } catch (e) {
       console.error(e);
+      console.error(e);
       setError('Check your Credentials');
     }
   };
