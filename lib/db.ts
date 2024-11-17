@@ -4,6 +4,9 @@ const dbConnect = async () => {
   try {
     const connection = await mongoose.connect(
       process.env.MONGODB_URI as string,
+      {
+        serverSelectionTimeoutMS: 30000, // 30 seconds
+      },
     );
     return connection;
   } catch (error: unknown) {
